@@ -33,6 +33,7 @@ int main()
 			mySystem.displayWorker();
 			break;
 		case 3://É¾³ý
+			mySystem.delWorker();
 			break;
 		case 4://ÐÞ¸Ä
 			break;

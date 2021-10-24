@@ -140,6 +140,13 @@ void WorkerManager::addWorker()
 
 		this->save();
 	}
+	else
+	{
+		cout << "添加失败！" << endl;
+	}
+
+	system("pause");
+	system("cls");
 }
 
 void WorkerManager::save()
@@ -193,10 +200,13 @@ void WorkerManager::workerInitializer()
 		{
 		case 1:
 			paraWorker = new Employee(paraID, paraName, paraDID);
+			break;
 		case 2:
 			paraWorker = new Manager(paraID, paraName, paraDID);
+			break;
 		case 3:
 			paraWorker = new Boss(paraID, paraName, paraDID);
+			break;
 		}
 		this->workerArr[index] = paraWorker;
 		index++;
@@ -217,6 +227,49 @@ void WorkerManager::displayWorker()
 		for (int i = 0; i < this->workerNum; i++)
 		{
 			this->workerArr[i]->showInfo();
+		}
+	}
+
+	system("pause");
+	system("cls");
+}
+
+int WorkerManager::exist(int id)
+{
+	int index = -1;
+	for (int i = 0; i < this->workerNum; i++)
+	{
+		if (this->workerArr[i]->workerID == id)
+			index = i;
+	}
+	return index;
+}
+
+void WorkerManager::delWorker()
+{
+	int index = -1;
+	if (isEmpty)
+	{
+		cout << "删除失败，系统中无员工信息！" << endl;
+	}
+	else
+	{
+		int id;
+		cout << "请输入需要删除的员工编号：" << endl;
+		cin >> id;
+		index = this->exist(id);
+		if (index != -1)
+		{
+			for (int i = index; i < this->workerNum - 1; i++)
+			{
+				this->workerArr[i] = this->workerArr[i + 1];
+			}
+			workerNum--;
+			cout << "删除成功！" << endl;
+		}
+		else
+		{
+			cout << "删除失败，该员工编号不存在！" << endl;
 		}
 	}
 

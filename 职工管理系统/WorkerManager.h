@@ -27,6 +27,10 @@ public:
 
 	void displayWorker();
 
+	int exist(int id);
+
+	void delWorker();
+
 	~WorkerManager();
 
 	int workerNum;
