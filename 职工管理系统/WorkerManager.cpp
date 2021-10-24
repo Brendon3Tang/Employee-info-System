@@ -33,7 +33,7 @@ WorkerManager::WorkerManager()
 	//3.文件不为空的情况
 	this->workerNum = this->getNum();
 	this->workerArr = new Worker * [workerNum];
-	this->workerInitializer();
+	this->loadWorker();
 
 	//测试
 	//for (int i = 0; i < workerNum; i++)
@@ -68,6 +68,9 @@ void WorkerManager::exitSystem()
 	exit(0);
 }
 
+//难点：创建一个指针的数组，并用指针的指针（**）来接收该数组；
+/*为什么这么做？数组只能存放同一数据类型的数据，但是Employee、Manager、Boss是三种不同的数据类型，因此不能用数组直接存放。
+此时利用多态：由于三种数据类型继承了同一个父类，因此可以用父类的指针数组存放这三个子类。并最后用一个指针的指针（newArr）接收这个指针数组。*/
 void WorkerManager::addWorker()
 {
 	cout << "请输入新增员工的数量" << endl;
@@ -183,7 +186,7 @@ int WorkerManager::getNum()
 	return paraNum;
 }
 
-void WorkerManager::workerInitializer()
+void WorkerManager::loadWorker()
 {
 	ifstream ifs;
 	ifs.open(FILENAME, ios::in);
@@ -331,6 +334,56 @@ void WorkerManager::modWorker()
 	
 
 
+}
+
+void WorkerManager::searchWorker()
+{
+	if (!isEmpty)
+	{
+		cout << "选择查找方式：" << endl;
+		cout << "1.按ID查找" << endl;
+		cout << "2.按姓名查找" << endl;
+		int select;
+		cin >> select;
+
+		if (select == 1)//用ID查找职工
+		{
+			cout << "请输入职工ID：" << endl;
+			int searchID;
+			cin >> searchID;
+
+			int index;
+			index = this->exist(searchID);
+			if (index != -1)//存在
+			{
+				cout << "已找到ID为" << this->workerArr[index]->workerID << "的职工，该职工的信息如下：" << endl;
+				this->workerArr[index]->showInfo();
+			}
+			else
+				cout << "该ID不存在，请重新输入！" << endl;
+		}
+		else if (select == 2)//用姓名查找职工
+		{
+			cout << "请输入职工姓名：" << endl;
+			string searchName;
+			cin >> searchName;
+			for (int i = 0; i < this->workerNum; i++)
+			{
+				if (this->workerArr[i]->workerName == searchName)
+				{
+					cout << "已找到 “" << searchName << "”(职工ID为" << this->workerArr[i]->workerID << ")的信息：" << endl;
+					this->workerArr[i]->showInfo();
+				}
+			}
+		}
+		else
+			cout << "输入有误，请重新输入！" << endl;
+	}
+	else
+		cout << "系统中职工信息为空！" << endl;
+
+	system("pause");
+	system("cls");
 }
 
 WorkerManager::~WorkerManager()

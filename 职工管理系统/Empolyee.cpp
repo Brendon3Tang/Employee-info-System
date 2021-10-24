@@ -9,10 +9,10 @@
 	 
 	void Employee::showInfo()
 	{
-		cout << "职位: " << this->getDept() << endl;
 		cout << "姓名: " << this->workerName << endl;
 		cout << "ID: " << this->workerID << endl;
 		cout << "部门ID:" << this->deptID << endl;
+		cout << "职位: " << this->getDept() << endl;
 		cout << "职责：完成经理交代的任务。" << endl;
 		cout << " " << endl;
 	}

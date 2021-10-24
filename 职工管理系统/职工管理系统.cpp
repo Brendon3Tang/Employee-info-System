@@ -39,6 +39,7 @@ int main()
 			mySystem.modWorker();
 			break;
 		case 5://≤È’“
+			mySystem.searchWorker();
 			break;
 		case 6://≈≈–Ú
 			break;
