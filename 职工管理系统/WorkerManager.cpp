@@ -364,6 +364,7 @@ void WorkerManager::searchWorker()
 		}
 		else if (select == 2)//用姓名查找职工
 		{
+			bool workerExist = false;
 			cout << "请输入职工姓名：" << endl;
 			string searchName;
 			cin >> searchName;
@@ -373,11 +374,16 @@ void WorkerManager::searchWorker()
 				{
 					cout << "已找到 “" << searchName << "”(职工ID为" << this->workerArr[i]->workerID << ")的信息：" << endl;
 					this->workerArr[i]->showInfo();
+					workerExist = true;
 				}
 			}
+			if (!workerExist)
+			cout << "查找失败，查无此人！" << endl;
 		}
 		else
+		{
 			cout << "输入有误，请重新输入！" << endl;
+		}
 	}
 	else
 		cout << "系统中职工信息为空！" << endl;
