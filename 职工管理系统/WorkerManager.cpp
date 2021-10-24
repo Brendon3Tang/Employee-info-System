@@ -277,6 +277,62 @@ void WorkerManager::delWorker()
 	system("cls");
 }
 
+void WorkerManager::modWorker()
+{
+	if (isEmpty)
+		cout << "系统中无职工信息！" << endl;
+	else
+	{
+		int index = -1;
+		int parID;
+		cout << "请输入需要修改的员工ID：" << endl;
+		cin >> parID;
+
+		index = this->exist(parID);
+		int newID;
+		int newDSelect;
+		string newName;
+
+		if (index != -1) //该ID存在
+		{
+			Worker* newWorker = NULL;
+			delete this->workerArr[index];
+			cout << "请输入新的员工ID：" << endl;
+			cin >> newID;
+			cout << "请输入新的员工姓名：" << endl;
+			cin >> newName;
+			cout << "请输入新的员工职位：" << endl;
+			cout << "1.普通职工" << endl;
+			cout << "2.经理" << endl;
+			cout << "3.老板" << endl;
+			cin >> newDSelect;
+			switch (newDSelect)
+			{
+			case 1:
+				newWorker = new Employee(newID, newName, newDSelect);
+				break;
+			case 2:
+				newWorker = new Manager(newID, newName, newDSelect);
+				break;
+			case 3:
+				newWorker = new Boss(newID, newName, newDSelect);
+				break;
+			}
+			this->workerArr[index] = newWorker;
+
+			cout << "修改成功！" << endl;
+		}
+		else
+			cout << "该ID不存在！" << endl;
+
+		system("pause");
+		system("cls");
+	}
+	
+
+
+}
+
 WorkerManager::~WorkerManager()
 {
 	if (this->workerArr != NULL)

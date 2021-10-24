@@ -36,6 +36,7 @@ int main()
 			mySystem.delWorker();
 			break;
 		case 4://ĞŞ¸Ä
+			mySystem.modWorker();
 			break;
 		case 5://²éÕÒ
 			break;

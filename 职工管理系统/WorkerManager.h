@@ -31,6 +31,8 @@ public:
 
 	void delWorker();
 
+	void modWorker();
+
 	~WorkerManager();
 
 	int workerNum;
