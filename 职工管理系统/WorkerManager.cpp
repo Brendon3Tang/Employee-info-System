@@ -1,5 +1,5 @@
 #include "WorkerManager.h"
-#include <cctype>
+
 
 WorkerManager::WorkerManager()
 {
@@ -77,6 +77,12 @@ void WorkerManager::addWorker()
 
 	int addNum = 0;
 	cin >> addNum;
+
+	while (addNum != 1 && addNum != 2)
+	{
+		cout << "请重新输入：" << endl;
+		cin >> addNum;
+	}
 
 	if (addNum > 0)
 	{
@@ -392,10 +398,133 @@ void WorkerManager::searchWorker()
 	system("cls");
 }
 
+void WorkerManager::sortWorker()
+{
+	if (this->isEmpty)
+	{
+		cout << "系统中无职工信息，请重试！" << endl;
+		system("pause");
+		system("cls");
+	}
+	else 
+	{
+		cout << "请选择排序方式：" << endl;
+		cout << "1.升序排序" << endl;
+		cout << "2.降序排序" << endl;
+
+		int select;
+		cin >> select;
+
+		while (select != 1 && select != 2)
+		{
+			cout << "请重新选择排序方式：" << endl;
+			cout << "1.升序排序" << endl;
+			cout << "2.降序排序" << endl;
+			cin >> select;
+		}
+
+		for (int i = 0; i < this->workerNum; i++)
+		{
+			int max_min = i;
+			for (int j = i + 1; j < this->workerNum; j++)
+			{
+				if (select == 1)//升序排序
+				{
+					if (this->workerArr[max_min]->workerID > this->workerArr[j]->workerID)
+					{
+						max_min = j;
+					}
+				}
+				else if (select == 2)//降序排序
+				{
+					if (this->workerArr[max_min]->workerID < this->workerArr[j]->workerID)
+					{
+						max_min = j;
+					}
+				}
+			}
+
+			if(i != max_min)
+			{
+				Worker* tmp = NULL;
+				tmp = this->workerArr[i];
+				this->workerArr[i] = this->workerArr[max_min];
+				this->workerArr[max_min] = tmp;
+			}
+		}
+		cout << "排序成功！排序后结果为：" << endl;
+		this->displayWorker();
+	}
+
+}
+
+void WorkerManager::clearAll()
+{
+	if (this->isEmpty)
+	{
+		cout << "系统中已无职工信息！" << endl;
+	}
+	else
+	{
+		cout << "确认清空？" << endl;
+		cout << "1.确认" << endl;
+		cout << "2.返回" << endl;
+
+		int select;
+		cin >> select;
+
+		while (select != 1 && select != 2)
+		{
+			cout << "请重新选择：" << endl;
+			cout << "1.确认" << endl;
+			cout << "2.返回" << endl;
+			cin >> select;
+		}
+		if (select == 1)
+		{
+			if (!this->isEmpty)
+			{
+				//删除原文件并重新创建（实现清空)
+				ofstream ofs;
+				ofs.open(FILENAME, ios::trunc);
+				ofs.close();
+
+				//释放内存
+				for (int i = 0; i < this->workerNum; i++)
+				{
+					delete this->workerArr[i];
+					this->workerArr[i] = NULL;
+				}
+				delete[] this->workerArr;
+				this->workerArr = NULL;
+
+				this->workerNum = 0;
+				this->isEmpty = true;
+			}
+			cout << "清空成功！" << endl;
+			system("pause");
+			system("cls");
+		}
+		if (select == 2)
+		{
+			system("pause");
+			system("cls");
+		}
+	}
+}
+
 WorkerManager::~WorkerManager()
 {
 	if (this->workerArr != NULL)
 	{
+		for (int i = 0; i < this->workerNum; i++)
+		{
+			if (this->workerArr[i] != NULL)
+			{
+				delete this->workerArr[i];
+				//this->workerArr[i] = NULL;
+			}
+		}
 		delete[] this->workerArr;
 		this->workerArr = NULL;
 	}

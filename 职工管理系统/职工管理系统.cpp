@@ -42,8 +42,10 @@ int main()
 			mySystem.searchWorker();
 			break;
 		case 6://ÅÅÐò
+			mySystem.sortWorker();
 			break;
 		case 7://Çå¿Õ
+			mySystem.clearAll();
 			break;
 		default:
 			system("cls");

@@ -47,6 +47,12 @@ public:
 	//查找职工 （选项5）
 	void searchWorker();
 
+	//为职工排序 （选项6）
+	void sortWorker();
+
+	//清空系统信息（选项7）
+	void clearAll();
+
 	//析构函数
 	~WorkerManager();
 
